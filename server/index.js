@@ -2,7 +2,7 @@
 
 const express = require("express");
 const morgan = require("morgan");
-const { handleGetItems } = require("./handler");
+const { handleGetItems, handleGetItem } = require("./handler");
 
 const PORT = 4000;
 
@@ -25,8 +25,10 @@ express()
   .use("/", express.static(__dirname + "/"))
 
   // REST endpoints?
-  //endpints for getting all items
+  //endpoints for getting all items
   .get("/items", (req, res) => handleGetItems(req, res))
+  //endpoint to get an item by id
+  .get("/item/:itemId", handleGetItem)
 
   .get("/bacon", (req, res) => res.status(200).json("🥓"))
 
