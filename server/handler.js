@@ -37,4 +37,30 @@ const handleGetItems = async (req, res) => {
   client.close();
 };
 
-module.exports = { handleGetItems };
+const handleGetItem = async (req, res) => {
+  // creates a new client
+  const client = new MongoClient(MONGO_URI, options);
+  // requesting parameter of URL
+  const {itemId} = req.params
+
+  // connect to the client
+  await client.connect();
+  // declare 'db'
+  const db = client.db("our-project");
+
+  //find item by _id from db
+  const item = await db.collection("Items").findOne({_id: itemId});
+  //response
+  if(!item){
+    res.status(404).json({status: 404, message: "Items not found"})
+  }else {
+    res.status(200).json({status:200, data: item})
+  }
+  
+//   close the connection to the database server
+  client.close();
+};
+
+module.exports = 
+  { handleGetItems, handleGetItem }
+;
