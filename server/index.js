@@ -9,6 +9,9 @@ const {
   handleDeleteItemFromCart,
   handleChangeItemQuantityInCart,
   handleGetCart,
+  handleGetCategory,
+  handleGetOrderHistory,
+  handleGetOrder,
 } = require("./handler");
 
 const PORT = 4000;
@@ -49,6 +52,18 @@ express()
   //endpoint for getting cart infos
 
   .get("/cart", handleGetCart)
+
+  //endpoint to get items in a specific category
+
+  .get("/category/:categoryId", handleGetCategory)
+
+  //endpoint to get all of the order history
+
+  .get("/order-history/", handleGetOrderHistory)
+
+  //endpoint to get a specific order by Id
+
+  .get("/order-history/:orderId", handleGetOrder)
 
   .get("/bacon", (req, res) => res.status(200).json("🥓"))
 

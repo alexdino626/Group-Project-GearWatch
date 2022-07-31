@@ -36,7 +36,7 @@ const handleGetItems = async (req, res) => {
   //   close the connection to the database server
   client.close();
 };
-
+// *********************************************************** handle get a specific item with Id
 const handleGetItem = async (req, res) => {
   // creates a new client
   const client = new MongoClient(MONGO_URI, options);
@@ -186,6 +186,85 @@ const handleGetCart = async (req, res) => {
   //   close the connection to the database server
   client.close();
 };
+// *********************************************************** handler for getting items of a specific category
+
+const handleGetCategory = async (req, res) => {
+  // creates a new client
+  const client = new MongoClient(MONGO_URI, options);
+  // requesting parameter of URL
+  const { categoryId } = req.params;
+
+  // connect to the client
+  await client.connect();
+  // declare 'db'
+  const db = client.db("our-project");
+
+  //find category by categoryId from db
+  const result = await db.collection("Items").find({ category: categoryId }).toArray();
+  //response
+  if (!result) {
+    res.status(404).json({ status: 404, message: "Category not found" });
+  } else {
+    res.status(200).json({ status: 200, data: result });
+  }
+
+  //   close the connection to the database server
+  client.close();
+};
+// *********************************************************** handler for getting order history
+
+const handleGetOrderHistory = async (req, res) => {
+  // creates a new client
+  const client = new MongoClient(MONGO_URI, options);
+
+  // connect to the client
+  await client.connect();
+
+  // declare 'db'
+  const db = client.db("our-project");
+
+  // get order history info
+
+  const result = await db.collection("Order History").find().toArray();
+
+  //response
+  result.length === 0
+    ? res.status(404).json({
+        status: 404,
+        message: "You have no past orders",
+      })
+    : res.status(200).json({
+        status: 200,
+        data: result
+      });
+
+  //   close the connection to the database server
+  client.close();
+};
+
+const handleGetOrder = async (req, res) => {
+  // creates a new client
+  const client = new MongoClient(MONGO_URI, options);
+  // requesting parameter of URL
+  const { orderId } = req.params;
+
+  // connect to the client
+  await client.connect();
+  // declare 'db'
+  const db = client.db("our-project");
+
+  //find item by _id from db
+  const order = await db.collection("Order History").findOne({ _id: orderId });
+  //response
+  if (!order) {
+    res.status(404).json({ status: 404, message: "Order not found" });
+  } else {
+    res.status(200).json({ status: 200, data: order });
+  }
+
+  //   close the connection to the database server
+  client.close();
+};
 
 module.exports = {
   handleGetItems,
@@ -194,4 +273,7 @@ module.exports = {
   handleDeleteItemFromCart,
   handleChangeItemQuantityInCart,
   handleGetCart,
+  handleGetCategory,
+  handleGetOrderHistory,
+  handleGetOrder,
 };
