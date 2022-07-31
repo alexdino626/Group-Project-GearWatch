@@ -25,7 +25,7 @@ const handleGetItems = async (req, res) => {
   items.length === 0
     ? res.status(404).json({
         status: 404,
-        message: "Not found Or Cart is empty",
+        message: "Not found",
       })
     : res.status(200).json({
         status: 200,
