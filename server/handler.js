@@ -257,7 +257,7 @@ const handleGetOrder = async (req, res) => {
   const db = client.db("our-project");
 
   //find item by _id from db
-  const order = await db.collection("Order History").findOne({ _id: orderId });
+  const order = await db.collection("Order History").findOne({ _id: parseInt(orderId) });
   //response
   if (!order) {
     res.status(404).json({ status: 404, message: "Order not found" });
@@ -337,6 +337,28 @@ const handlePurchase = async (req, res) => {
   client.close();
 };
 
+const handleGetCompanies = async (req, res) => {
+  // creates a new client
+  const client = new MongoClient(MONGO_URI, options);
+
+  // connect to the client
+  await client.connect();
+  // declare 'db'
+  const db = client.db("our-project");
+
+  //find companies info from db
+  const company = await db.collection("Companies").find().toArray();
+  //respond with company name
+  if (company.length === 0) {
+    res.status(404).json({ status: 404, message: "No companies found!" });
+  } else {
+    res.status(200).json({ status: 200, data: company });
+  }
+
+  //   close the connection to the database server
+  client.close();
+};
+
 module.exports = {
   handleGetItems,
   handleGetItem,
@@ -348,4 +370,5 @@ module.exports = {
   handleGetOrderHistory,
   handleGetOrder,
   handlePurchase,
+  handleGetCompanies,
 };
