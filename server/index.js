@@ -9,9 +9,10 @@ const {
   handleDeleteItemFromCart,
   handleChangeItemQuantityInCart,
   handleGetCart,
+  handlePurchase,
 } = require("./handler");
 
-const PORT = 4000;
+const PORT = 8000;
 
 express()
   .use(function (req, res, next) {
@@ -47,8 +48,10 @@ express()
   .patch("/cart", handleChangeItemQuantityInCart)
 
   //endpoint for getting cart infos
-
   .get("/cart", handleGetCart)
+
+  // endpoint for making an order
+  .post("/purchase", handlePurchase)
 
   .get("/bacon", (req, res) => res.status(200).json("🥓"))
 
