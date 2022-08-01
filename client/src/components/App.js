@@ -5,6 +5,10 @@ import styled from "styled-components";
 import GlobalStyles from "../GlobalStyles";
 import Footer from "./Footer";
 import Cart from "./Cart";
+import HomePage from "./HomeFeed";
+import Items from "./Items";
+import Checkout from "./Checkout";
+
 const App = () => {
   return (
     <>
@@ -13,9 +17,10 @@ const App = () => {
         <Header />
         <Div>
           <Routes>
-            <Route exact path="/" element={"app"} />
+            <Route exact path="/" element={<HomePage/>} />
             <Route exact path="/cart" element={<Cart />} />
-            <Route exact path="/items/:item" element={"item"} />
+            <Route exact path="/item/:item" element={<Items/>} />
+            <Route exact path="/checkout" element={<Checkout/>}/>
           </Routes>
         </Div>
         <Footer />
@@ -30,8 +35,8 @@ const Div = styled.div`
 
   margin: auto;
   width: 70%;
-
-  height: 87vh;
+  height: 100%;
+  min-height: 1250px;
 `;
 
 export default App;

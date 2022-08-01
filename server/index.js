@@ -41,7 +41,7 @@ express()
   //endpoint to get an item by id
   .get("/item/:itemId", handleGetItem)
 
-  // endpoint for adding an item to cart(need customerId,itemsId,quantities of item from frontend)
+  // endpoint for adding an item to cart(need item Name,itemsId,quantities of item from frontend)
   .post("/cart", handleAddItemToCart)
 
   // endpoint for deleting an item from cart(please containt itemId in req.body)
