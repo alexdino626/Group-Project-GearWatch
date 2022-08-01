@@ -12,6 +12,7 @@ const {
   handleGetCategory,
   handleGetOrderHistory,
   handleGetOrder,
+  handlePurchase,
 } = require("./handler");
 
 const PORT = 4000;
@@ -64,6 +65,9 @@ express()
   //endpoint to get a specific order by Id
 
   .get("/order-history/:orderId", handleGetOrder)
+
+  // endpoint to made new order
+  .post("/purchase", handlePurchase)
 
   .get("/bacon", (req, res) => res.status(200).json("🥓"))
 
