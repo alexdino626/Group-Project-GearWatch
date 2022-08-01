@@ -200,7 +200,10 @@ const handleGetCategory = async (req, res) => {
   const db = client.db("our-project");
 
   //find category by categoryId from db
-  const result = await db.collection("Items").find({ category: categoryId }).toArray();
+  const result = await db
+    .collection("Items")
+    .find({ category: categoryId })
+    .toArray();
   //response
   if (!result) {
     res.status(404).json({ status: 404, message: "Category not found" });
@@ -235,7 +238,7 @@ const handleGetOrderHistory = async (req, res) => {
       })
     : res.status(200).json({
         status: 200,
-        data: result
+        data: result,
       });
 
   //   close the connection to the database server
@@ -266,6 +269,74 @@ const handleGetOrder = async (req, res) => {
   client.close();
 };
 
+// *********************************************************** handler for making an order
+// expect from frontend{ itemList : [ {item1 info and quantity},{item2 info and quantity}, {item3 info and quantity} ], cardNumber:*, address:, firstName:, lastName: }
+const handlePurchase = async (req, res) => {
+  // assume we receive an array of items
+  const shoppingList = req.body.itemList;
+  // generate a random number as order history _id
+  const order_id = Date.now() - Math.floor(Math.random() * 300000);
+
+  // creates a new client
+  const client = new MongoClient(MONGO_URI, options);
+
+  // connect to the client
+  await client.connect();
+
+  // declare 'db'
+  const db = client.db("our-project");
+
+  // validate payment information
+  if (!req.body.cardNumber.length !== 16 || req.body.cardNumber.includes(" ")) {
+    return res.status(400).json({
+      status: 400,
+      message: "Please provide valid card information! Should be 16 digit.",
+    });
+  }
+
+  // validate if we have enough quantity in stock
+  for (let item of shoppingList) {
+    if (item.numInStock < item.quantity) {
+      return res.status(400).json({
+        status: 400,
+        message: `Sorry, we don't have enough _id:${item.id}, name: ${item.name} in stock.`,
+      });
+      //update the stock
+    } else {
+      await db
+        .collection("Items")
+        .updateOne(
+          { _id: item._id },
+          { $set: { numInStock: item.numInStock - item.quantity } }
+        );
+    }
+  }
+
+  // To Do :if other things need to be validated
+
+  // response - order success
+  res.status(200).json({
+    status: 200,
+    message: "Order Placed",
+  });
+
+  // save order history
+  await db.collection("Order History").insertOne({
+    _id: order_id,
+    orderNumber: order_id,
+    orderedItems: req.body.itemList,
+    shippingAddress: req.body.address,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+  });
+
+  //empty the cart, when pass un empty{}, MongoDB matches all documents in the collection and deletes them
+  await db.collection("cart").deleteMany({});
+
+  //   close the connection to the database server
+  client.close();
+};
+
 module.exports = {
   handleGetItems,
   handleGetItem,
@@ -276,4 +347,5 @@ module.exports = {
   handleGetCategory,
   handleGetOrderHistory,
   handleGetOrder,
+  handlePurchase,
 };
