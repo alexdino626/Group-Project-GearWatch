@@ -12,7 +12,7 @@ const {
   handlePurchase,
 } = require("./handler");
 
-const PORT = 8000;
+const PORT = 4000;
 
 express()
   .use(function (req, res, next) {
