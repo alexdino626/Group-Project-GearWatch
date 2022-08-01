@@ -49,7 +49,7 @@ const handleGetItem = async (req, res) => {
   const db = client.db("our-project");
 
   //find item by _id from db
-  const item = await db.collection("Items").findOne({ _id: itemId });
+  const item = await db.collection("Items").findOne({ _id: parseInt(itemId) });
   //response
   if (!item) {
     res.status(404).json({ status: 404, message: "Items not found" });
