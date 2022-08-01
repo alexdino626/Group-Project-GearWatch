@@ -6,9 +6,30 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [numItem, setNumItem] = useState(0);
+  const [load, setLoad] = useState(false);
+  const [item, setItem] = useState(0);
 
-  // to get cart number it will be moved to context file
-  useEffect(() => {}, []);
+  // to get cart number 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetch("/cart");
+      const json = await data.json();
+      setItem(json.data);
+      setLoad(true);
+      const num = item.reduce((sum,acc) => sum + acc.quantity,0)
+        setNumItem(num)
+      return json;
+    };
+    fetchData().catch(() => {
+      console.log("S");
+    });
+  }, [load]);
+  if (load === false) {
+    return <>loading</>;
+  }
+  
+
+  
 
   return (
     <Bar>
@@ -21,7 +42,7 @@ const Header = () => {
       <StyledLink to={"/cart"}>
         <Cart>
           <GiShoppingCart />
-          {numItem > 0 && <span>{numItem}</span>}
+          {numItem > 0 &&<span>{numItem}</span>}
         </Cart>
       </StyledLink>
     </Bar>

@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 const Items = () => {
   const [item, setItem] = useState(null);
   const [load, setLoad] = useState(false);
+  const [comp,setComp] = useState(null);
+  const[loadComp,setLoadComp] = useState(false)
   const [count, setCount] = useState(1);
 
 
@@ -22,7 +24,23 @@ const Items = () => {
       console.log("S");
     });
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetch(`/companies`);
+      const json = await data.json();
+      
+      setComp(json.data)
+      setLoadComp(true);
+      return json;
+    };
+    fetchData().catch(() => {
+      console.log("S");
+    });
+  }, []);
   if (load === false) {
+    return <>loading</>;
+  }
+  if (loadComp === false) {
     return <>loading</>;
   }
   const handleClickPlus = () => {
@@ -44,7 +62,6 @@ const Items = () => {
       })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
         window.location.href = "/cart";
       });
 
@@ -57,7 +74,7 @@ const Items = () => {
           <Cat>{item.category}</Cat>
           <div>For the {item.body_location}</div>
           <Name>{item.name}</Name>
-          <div>by {item.companyId}</div>
+          <div>by {(comp.filter(x => x._id === item.companyId)[0].name)}</div>
         </Wrapper>
         <Item>
           <Img src={item.imageSrc} />
