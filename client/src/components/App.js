@@ -8,6 +8,7 @@ import Cart from "./Cart";
 import HomePage from "./HomeFeed";
 import Items from "./Items";
 import Checkout from "./Checkout";
+import Confirm from "./Confirmed";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route exact path="/cart" element={<Cart />} />
             <Route exact path="/item/:item" element={<Items/>} />
             <Route exact path="/checkout" element={<Checkout/>}/>
+            <Route exact path="/confirmed" element={<Confirm/>}/>
           </Routes>
         </Div>
         <Footer />

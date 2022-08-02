@@ -287,7 +287,7 @@ const handlePurchase = async (req, res) => {
   const db = client.db("our-project");
 
   // validate payment information
-  if (!req.body.cardNumber.length !== 16 || req.body.cardNumber.includes(" ")) {
+  if (req.body.cardNumber.length !== 16 || req.body.cardNumber.includes(" ")) {
     return res.status(400).json({
       status: 400,
       message: "Please provide valid card information! Should be 16 digit.",
