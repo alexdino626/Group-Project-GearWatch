@@ -11,7 +11,7 @@ const Confirm = () => {
     const fetchData = async () => {
       const data = await fetch("/order-history/");
       const json = await data.json();
-      console.log(json.data);
+
       setLastOrder(json.data);
       setLoad(true);
 
@@ -22,57 +22,67 @@ const Confirm = () => {
     });
   }, []);
   if (load === false) {
-    return <><Loading>loading</Loading></>;
+    return (
+      <>
+        <Loading>loading</Loading>
+      </>
+    );
   }
   const con = lastOrder[lastOrder.length - 1];
   return (
     <Wrapper>
-      <Mascot><GiHound /></Mascot>
+      <Mascot>
+        <GiHound />
+      </Mascot>
       <Confirmation>Thank You!</Confirmation>
-      <ConfirmationText>Your order has been confirmed <strong>{con.firstName} {con.lastName}!</strong></ConfirmationText>
-      <ConfirmationText>Your confirmation <strong>#{con.orderNumber}</strong></ConfirmationText>
-      
-        {con.orderedItems.map((x) => {
-          const float = x.price.substring(1);
-          return (
-            <>
-              <Content>
-                <DivDesc>
-                  <Img src={x.imageSrc} />
-                  <Desc>
-                    <div>{x.name}</div>
-                    <Update>QTY:{x.quantity}</Update>
-                  </Desc>
-                </DivDesc>
-                <Price>
-                  <div>Product Total</div>
-                  <div>${(parseFloat(float) * x.quantity).toFixed(2)}</div>
-                </Price>
-              </Content>
-            </>
-          );
-        })}
-        <ComeAgain>Hope to see you again <strong>{con.firstName}! 😊</strong></ComeAgain>
-      </Wrapper>
+      <ConfirmationText>
+        Your order has been confirmed{" "}
+        <strong>
+          {con.firstName} {con.lastName}!
+        </strong>
+      </ConfirmationText>
+      <ConfirmationText>
+        Your confirmation <strong>#{con.orderNumber}</strong>
+      </ConfirmationText>
+
+      {con.orderedItems.map((x) => {
+        const float = x.price.substring(1);
+        return (
+          <>
+            <Content>
+              <DivDesc>
+                <Img src={x.imageSrc} />
+                <Desc>
+                  <div>{x.name}</div>
+                  <Update>QTY:{x.quantity}</Update>
+                </Desc>
+              </DivDesc>
+              <Price>
+                <div>Product Total</div>
+                <div>${(parseFloat(float) * x.quantity).toFixed(2)}</div>
+              </Price>
+            </Content>
+          </>
+        );
+      })}
+      <ComeAgain>
+        Hope to see you again <strong>{con.firstName}! 😊</strong>
+      </ComeAgain>
+    </Wrapper>
   );
 };
 
-
-
-
-
-
 const Wrapper = styled.div`
-  box-shadow: 3px 10px 10px -2px rgba(0,0,0,0.7);
-  -webkit-box-shadow: 3px 10px 10px -2px rgba(0,0,0,0.7);
-  -moz-box-shadow: 3px 10px 10px -2px rgba(0,0,0,0.7);
+  box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
   text-align: center;
   padding-left: 100px;
   padding-right: 100px;
   margin-top: 100px;
   margin-left: 290px;
   margin-bottom: 500px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   border: solid 1px lightgrey;
   background-color: hsl(0, 0%, 98%);
 `;
@@ -111,24 +121,24 @@ const Update = styled.div`
 `;
 
 const Confirmation = styled.div`
-padding-top: 20px;
-padding-bottom: 20px;
-font-size: 45px;
-font-weight: bold;
-`
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 45px;
+  font-weight: bold;
+`;
 
 const ConfirmationText = styled.div`
-font-size: 20px;
+  font-size: 20px;
 `;
 
 const Mascot = styled.div`
-padding-top: 20px;
-font-size: 45px;
+  padding-top: 20px;
+  font-size: 45px;
 `;
 
 const ComeAgain = styled.div`
-font-size: 20px;
-padding: 20px;
+  font-size: 20px;
+  padding: 20px;
 `;
 
 const Loading = styled.div`
@@ -182,6 +192,5 @@ const Loading = styled.div`
     }
   }
 `;
-
 
 export default Confirm;

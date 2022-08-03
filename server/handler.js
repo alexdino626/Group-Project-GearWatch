@@ -300,10 +300,7 @@ const handlePurchase = async (req, res) => {
   const db = client.db("our-project");
 
   // validate payment information
-  if (
-    req.body.cardNumber.length !== 16 ||
-    req.body.email.includes("@") === false
-  ) {
+  if (req.body.cardNumber.length !== 16) {
     return res.status(400).json({
       status: 400,
       message:
