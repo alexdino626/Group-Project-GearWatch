@@ -15,7 +15,7 @@ const Cart = () => {
     const fetchData = async () => {
       const data = await fetch("/cart");
       const json = await data.json();
-      console.log(json.data);
+
       setItem(json.data);
       setLoad(true);
 
@@ -26,12 +26,14 @@ const Cart = () => {
     });
   }, []);
   if (load === false) {
-    return <><Loading>Loading</Loading></>;
+    return (
+      <>
+        <Loading>Loading</Loading>
+      </>
+    );
   }
 
   const handleDelete = (id) => {
-    console.log(id);
-    console.log("click");
     fetch("/cart", {
       method: "DELETE",
       headers: {
@@ -41,7 +43,6 @@ const Cart = () => {
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
         window.location.href = "/cart";
       });
   };
@@ -58,13 +59,10 @@ const Cart = () => {
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
         window.location.href = "/cart";
       });
   };
   const handleClickMinus = (min, id) => {
-    console.log(min);
-    console.log(id);
     fetch("/cart", {
       method: "PATCH",
       headers: {
@@ -77,7 +75,6 @@ const Cart = () => {
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
         window.location.href = "/cart";
       });
   };
@@ -189,8 +186,7 @@ const Trash = styled(BsTrash)`
   }
 `;
 
-const Desc = styled.div`
-`;
+const Desc = styled.div``;
 
 const Img = styled.img`
   height: 75px;
@@ -204,7 +200,7 @@ const Content = styled.div`
 `;
 
 const Wrapper = styled.div`
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   margin-top: 30px;
   margin-left: 20px;
 `;

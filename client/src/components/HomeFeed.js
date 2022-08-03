@@ -18,7 +18,7 @@ const HomePage = () => {
       setItems(json.data);
       setLoad(true);
       setSlice(24);
-      console.log(json);
+
       return json;
     };
     fetchData().catch(() => {
