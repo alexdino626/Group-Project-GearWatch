@@ -76,7 +76,7 @@ const Checkout = () => {
       <Name>Accepted Cards</Name>
       <Cards> <FaCcVisa fill="navy" /> <FaCcAmex fill="blue" /> <FaCcMastercard fill="red" /> <FaCcDiscover fill="orange"/></Cards>
 
-      <Name>Your Credit Card</Name>
+      <Name>Credit Card</Name>
       <Input><input size="30" placeholder="Credit card number" onChange={(event) => {setPay(event.target.value);}}/></Input>
 
       <Button><button type={"submit"} disabled={name === "" || lastName === "" || email === "" || addy === "" || pay === ""}> Place Order </button></Button>

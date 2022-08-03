@@ -26,7 +26,7 @@ const Cart = () => {
     });
   }, []);
   if (load === false) {
-    return <>loading</>;
+    return <><Loading>Loading</Loading></>;
   }
 
   const handleDelete = (id) => {
@@ -231,6 +231,58 @@ const Zz = styled.div`
   font-size: 200px;
   flex-direction: column;
   text-align: center;
+`;
+
+const Loading = styled.div`
+  font-family: "Roboto Mono", monospace;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  background: transparent;
+  border: 3px solid #3c3c3c;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 150px;
+  font-size: 20px;
+  color: ${COLORS.shadowColour};
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px ${COLORS.shadowColour};
+  box-shadow: 0 0 20px ${COLORS.shadowColour};
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top: 3px solid ${COLORS.borderColour};
+    border-right: 3px solid ${COLORS.borderColour};
+    border-radius: 50%;
+    animation: animateC 2s linear infinite;
+  }
+
+  @keyframes animateC {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes animate {
+    0% {
+      transform: rotate(45deg);
+    }
+    100% {
+      transform: rotate(405deg);
+    }
+  }
 `;
 
 export default Cart;

@@ -9,7 +9,7 @@ const HomePage = () => {
   const [items, setItems] = useState([]);
   const [load, setLoad] = useState(false);
   const [slice, setSlice] = useState(24);
-  // const [items, setItems] = useState({});
+
   // FETCHING all items
   useEffect(() => {
     const fetchData = async () => {
@@ -51,9 +51,18 @@ const HomePage = () => {
                     <Name>{x.name}</Name>
                     <Img src={x.imageSrc} />
                     <Price>{x.price}</Price>
-                    <Stock>{x.numInStock} In stock 
-                    <Low>{x.numInStock <= 3 && x.numInStock > 0 && <div>LOW IN STOCK!!!</div>}</Low>
-                    <Out>{x.numInStock >= 0 && x.numInStock < 1 && <div>OUT OF STOCK!!!</div>}</Out>
+                    <Stock>
+                      {x.numInStock} In stock
+                      <LowStock>
+                        {x.numInStock <= 3 && x.numInStock > 0 && (
+                          <div>LOW IN STOCK!!!</div>
+                        )}
+                      </LowStock>
+                      <OutStock>
+                        {x.numInStock >= 0 && x.numInStock < 1 && (
+                          <div>OUT OF STOCK!!!</div>
+                        )}
+                      </OutStock>
                     </Stock>
                   </Content>
                 </LinkItem>
@@ -71,17 +80,16 @@ const HomePage = () => {
   );
 };
 
-
-const Low = styled.div`
-color: ${COLORS.low};
+const LowStock = styled.div`
+  color: ${COLORS.low};
 `;
 
-const Out = styled.div`
-color: ${COLORS.out};
+const OutStock = styled.div`
+  color: ${COLORS.out};
 `;
 
 const Wrapper = styled.div`
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
   margin-top: 30px;
   margin-left: 20px;
 `;
@@ -104,9 +112,9 @@ const Items = styled.div`
 `;
 
 const LinkItem = styled(Link)`
-  box-shadow: 3px 10px 10px -2px rgba(0,0,0,0.7);
--webkit-box-shadow: 3px 10px 10px -2px rgba(0,0,0,0.7);
--moz-box-shadow: 3px 10px 10px -2px rgba(0,0,0,0.7);
+  box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
   border: solid 1px lightgrey;
   border-radius: 20px;
   background-color: light;
@@ -122,8 +130,8 @@ const Content = styled.div`
 `;
 
 const Stock = styled.div`
-margin-top: 5px;
-padding-bottom: 10px;
+  margin-top: 5px;
+  padding-bottom: 10px;
 `;
 
 const Button = styled.button`
@@ -148,13 +156,13 @@ const Img = styled.img`
 `;
 
 const Name = styled.div`
-  white-space: wrap; 
-  width: 150px; 
+  white-space: wrap;
+  width: 150px;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
   border: 0px solid #000000;
-    height: 95px;
-    margin-bottom: 10px;
+  height: 95px;
+  margin-bottom: 10px;
 `;
 
 const Price = styled.div`
@@ -164,60 +172,55 @@ const Price = styled.div`
 `;
 
 const Loading = styled.div`
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:150px;
-  height:150px;
-  background:transparent;
-  border:3px solid #7bc0ea;
-  border-radius:50%;
-  text-align:center;
-  line-height:150px;
-  font-family:sans-serif;
-  font-size:20px;
-  color: grey;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  text-shadow:0 0 10px grey;
-  box-shadow:0 0 20px rgba(0,0,0,.5);
+  font-family: "Roboto Mono", monospace;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  background: transparent;
+  border: 3px solid #3c3c3c;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 150px;
+  font-size: 20px;
+  color: ${COLORS.shadowColour};
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px ${COLORS.shadowColour};
+  box-shadow: 0 0 20px ${COLORS.shadowColour};
 
-&:before {
-  content:'';
-  position:absolute;
-  top:-3px;
-  left:-3px;
-  width:100%;
-  height:100%;
-  border:3px solid transparent;
-  border-top:3px solid grey;
-  border-right:3px solid grey;
-  border-radius:50%;
-  animation:animateC 2s linear infinite;
-}
-@keyframes animateC
-{
-  0%
-  {
-    transform:rotate(0deg);
+  &:before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top: 3px solid ${COLORS.borderColour};
+    border-right: 3px solid ${COLORS.borderColour};
+    border-radius: 50%;
+    animation: animateC 2s linear infinite;
   }
-  100%
-  {
-    transform:rotate(360deg);
+
+  @keyframes animateC {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
-}
-@keyframes animate
-{
-  0%
-  {
-    transform:rotate(45deg);
+  @keyframes animate {
+    0% {
+      transform: rotate(45deg);
+    }
+    100% {
+      transform: rotate(405deg);
+    }
   }
-  100%
-  {
-    transform:rotate(405deg);
-  }
-}
-`
+`;
 
 export default HomePage;
