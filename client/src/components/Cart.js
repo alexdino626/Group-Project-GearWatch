@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { RiZzzFill } from "react-icons/ri";
-import { ImSleepy } from "react-icons/im";
+import { GiHound } from "react-icons/gi";
 import { BsTrash, BsFillPlusCircleFill } from "react-icons/bs";
 import { AiFillMinusCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { COLORS } from "./constants";
 
 const Cart = () => {
   const [item, setItem] = useState(0);
@@ -80,15 +81,16 @@ const Cart = () => {
         window.location.href = "/cart";
       });
   };
+
   return (
     <>
       <Wrapper>
-        <Div>Your cart:</Div>
+        <Div>Cart:</Div>
         {item === undefined ? (
           <>
-            <Empty>Looks like it's empty!</Empty>
+            <Empty>No items in cart</Empty>
             <Zz>
-              <ImSleepy />
+              <GiHound />
               <RiZzzFill />
             </Zz>
           </>
@@ -134,34 +136,39 @@ const Cart = () => {
     </>
   );
 };
+
 const Checkout = styled.button`
   margin: 50px;
   padding: 15px;
   font-size: 30px;
-  font-family: cursive;
   border-radius: 15px;
   color: white;
-  background-color: rgb(105, 84, 210);
+  background-color: ${COLORS.button};
   &:hover {
+    background-color: ${COLORS.bhovering};
     cursor: pointer;
   }
 `;
+
 const Update = styled.div`
   font-size: 23px;
   display: flex;
   gap: 5px;
   margin-top: 5px;
 `;
+
 const Plus = styled(BsFillPlusCircleFill)`
   &:hover {
     cursor: pointer;
   }
 `;
+
 const Minus = styled(AiFillMinusCircle)`
   &:hover {
     cursor: pointer;
   }
 `;
+
 const Price = styled.div`
   display: flex;
   justify-content: space-between;
@@ -169,9 +176,11 @@ const Price = styled.div`
   border-top: solid;
   padding-top: 5px;
 `;
+
 const DivDesc = styled.div`
   display: flex;
 `;
+
 const Trash = styled(BsTrash)`
   margin-top: 15px;
   &:hover {
@@ -179,38 +188,49 @@ const Trash = styled(BsTrash)`
     cursor: pointer;
   }
 `;
-const Desc = styled.div``;
+
+const Desc = styled.div`
+`;
+
 const Img = styled.img`
   height: 75px;
-  border: solid;
   padding: 5px;
   margin-right: 5px;
 `;
+
 const Content = styled.div`
   margin-top: 40px;
-  border: solid;
   padding: 15px;
 `;
+
 const Wrapper = styled.div`
-  font-family: cursive;
+  font-family: 'Roboto Mono', monospace;
   margin-top: 30px;
   margin-left: 20px;
 `;
+
 const Div = styled.div`
-  font-size: 30px;
-  font-weight: bolder;
+  font-size: 45px;
+  font-weight: bold;
   border-bottom: solid 5px;
   width: fit-content;
   padding-right: 90px;
   padding-bottom: 10px;
 `;
+
 const Empty = styled.div`
   margin-top: 30px;
-  font-size: 50px;
+  font-size: 45px;
+  font-style: italic;
+  font-weight: bold;
 `;
+
 const Zz = styled.div`
-  margin-top: 50px;
-  font-size: 75px;
+  margin-left: 500px;
+  margin-top: 150px;
+  font-size: 200px;
+  flex-direction: column;
   text-align: center;
 `;
+
 export default Cart;

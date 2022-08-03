@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import { COLORS } from "./constants";
 
 const Items = () => {
   const [item, setItem] = useState(null);
@@ -71,10 +72,9 @@ const Items = () => {
     <>
       <All>
         <Wrapper>
-          <Cat>{item.category}</Cat>
-          <div>For the {item.body_location}</div>
+          <Cat>{item.category} <Span>For the {item.body_location}</Span></Cat>
           <Name>{item.name}</Name>
-          <div>by {(comp.filter(x => x._id === item.companyId)[0].name)}</div>
+          <Company>by {(comp.filter(x => x._id === item.companyId)[0].name)}</Company>
         </Wrapper>
         <Item>
           <Img src={item.imageSrc} />
@@ -97,6 +97,7 @@ const Items = () => {
     </>
   );
 };
+
 const AddBut = styled.button`
 font-size: 25px;
 margin: 15px;
@@ -104,67 +105,86 @@ margin: 15px;
   padding: 15px;
   border-radius: 25px;
   border: none;
-  background-color: rgb(105, 84, 210);
+  background-color: #38a0e0;
   color: white;
 &:hover{
-    cursor: pointer;
-}
-`
+  background-color: ${COLORS.bhovering};
+  cursor: pointer;
+}`
+
 const Button = styled.button`
   margin: 15px;
   font-size: 25px;
   padding: 15px;
   border-radius: 25px;
   border: none;
-  background-color: rgb(105, 84, 210);
+  background-color: #38a0e0;
   color: white;
   &:hover:not([disabled]) {
+    background-color: #7bc0ea;
     cursor: pointer;
   }
   &:disabled {
     cursor: not-allowed;
-    background-color: hsla(258, 100%, 86%, 1);
+    background-color: #a6d4f2;
     border-color: hsla(258, 100%, 86%);
-  }
-`;
+  }`;
+
 const Stock = styled.div`
   display: flex;
   margin: 15px;
   font-size: 45px;
   align-items: center;
 `;
+
 const Order = styled.div`
   margin-left: 15px;
 `;
+
 const Price = styled.div`
   font-size: 50px;
   margin-bottom: 15px;
 `;
+
 const Img = styled.img`
   height: 350px;
-  border: solid lightgrey;
   padding: 10px;
 `;
+
 const Item = styled.div`
   display: flex;
   margin-top: 50px;
   margin-left: 90px;
 `;
+
+const Company = styled.div`
+  font-size: 20px;
+  font-style: italic;
+`;
+
 const Name = styled.div`
-  margin-top: 20px;
-  font-size: 50px;
+  margin-top: 40px;
+  font-size: 45px;
   margin-bottom: 10px;
 `;
+
 const Wrapper = styled.div``;
+
 const All = styled.div`
+  font-family: 'Roboto Mono', monospace;
   margin-top: 30px;
   margin-left: 20px;
-  font-family: cursive;
 `;
+
+const Span = styled.span`
+  font-style: italic;
+  font-size: 25px;
+`;
+
 const Cat = styled.div`
-  color: lightgray;
   font-size: 45px;
-  border-bottom: solid lightgrey;
+  border-bottom: solid ${COLORS.solidborder};
   margin-bottom: 5px;
 `;
+
 export default Items;

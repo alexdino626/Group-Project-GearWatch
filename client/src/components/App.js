@@ -34,7 +34,6 @@ const Div = styled.div`
   display: flex;
   border-right: solid 1px lightgray;
   border-left: solid 1px lightgray;
-
   margin: auto;
   width: 70%;
   height: 100%;
