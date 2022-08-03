@@ -72,8 +72,19 @@ const handleAddItemToCart = async (req, res) => {
   // declare 'db'
   const db = client.db("our-project");
 
-  //add item ( req.body ) to collection "cart".
-  await db.collection("cart").insertOne(req.body);
+  // add item  to collection "cart".
+  // let's check if item is already in cart. If not , result will be null. we insert the item in collection.
+  //if item is already in cart. Instead of insertOne, we use updateOne to increase the quantity.
+  const result = await db.collection("cart").findOne({ _id: req.body._id });
+
+  result === null
+    ? await db.collection("cart").insertOne(req.body)
+    : await db
+        .collection("cart")
+        .updateOne(
+          { _id: req.body._id },
+          { $set: { quantity: result.quantity + req.body.quantity } }
+        );
 
   //response
   res.status(200).json({
@@ -99,7 +110,7 @@ const handleDeleteItemFromCart = async (req, res) => {
 
   //add item ( req.body ) to collection "cart".
   const result = await db.collection("cart").deleteOne({ _id });
-  console.log(result);
+
   //response (if delete success, result ={ acknowledged: true, deletedCount: 1 })
 
   result.deletedCount === 1
@@ -257,7 +268,9 @@ const handleGetOrder = async (req, res) => {
   const db = client.db("our-project");
 
   //find item by _id from db
-  const order = await db.collection("Order History").findOne({ _id: parseInt(orderId) });
+  const order = await db
+    .collection("Order History")
+    .findOne({ _id: parseInt(orderId) });
   //response
   if (!order) {
     res.status(404).json({ status: 404, message: "Order not found" });
@@ -287,10 +300,14 @@ const handlePurchase = async (req, res) => {
   const db = client.db("our-project");
 
   // validate payment information
-  if (req.body.cardNumber.length !== 16 || req.body.cardNumber.includes(" ")) {
+  if (
+    req.body.cardNumber.length !== 16 ||
+    req.body.email.includes("@") === false
+  ) {
     return res.status(400).json({
       status: 400,
-      message: "Please provide valid card information! Should be 16 digit.",
+      message:
+        "Please provide valid card information(16 digit) and email address!",
     });
   }
 
