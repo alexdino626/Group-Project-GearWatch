@@ -28,9 +28,9 @@ const Header = () => {
   }, [load]);
 
   // no need for a loading state for the header
-  if (load === false) {
-    return <></>;
-  }
+  // if (load === false) {
+  //   return <></>;
+  // }
 
   return (
     <Bar>
