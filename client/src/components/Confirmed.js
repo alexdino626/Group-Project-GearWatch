@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { COLORS } from "./constants";
+import { GiHound } from "react-icons/gi";
 import styled from "styled-components";
 
 const Confirm = () => {
@@ -20,16 +22,16 @@ const Confirm = () => {
     });
   }, []);
   if (load === false) {
-    return <>loading</>;
+    return <><Loading>loading</Loading></>;
   }
   const con = lastOrder[lastOrder.length - 1];
   return (
-    <div>
-      <div>
-        Congrats! Your order has been confirmed {con.firstName} {con.lastName}!!
-      </div>
-      <div>Your confirmation #{con.orderNumber}</div>
-      <div>
+    <Wrapper>
+      <Mascot><GiHound /></Mascot>
+      <Confirmation>Thank You!</Confirmation>
+      <ConfirmationText>Your order has been confirmed <strong>{con.firstName} {con.lastName}!</strong></ConfirmationText>
+      <ConfirmationText>Your confirmation <strong>#{con.orderNumber}</strong></ConfirmationText>
+      
         {con.orderedItems.map((x) => {
           const float = x.price.substring(1);
           return (
@@ -50,22 +52,45 @@ const Confirm = () => {
             </>
           );
         })}
-      </div>
-    </div>
+        <ComeAgain>Hope to see you again <strong>{con.firstName}! 😊</strong></ComeAgain>
+      </Wrapper>
   );
 };
+
+
+
+
+
+
+const Wrapper = styled.div`
+  box-shadow: 3px 10px 10px -2px rgba(0,0,0,0.7);
+  -webkit-box-shadow: 3px 10px 10px -2px rgba(0,0,0,0.7);
+  -moz-box-shadow: 3px 10px 10px -2px rgba(0,0,0,0.7);
+  text-align: center;
+  padding-left: 100px;
+  padding-right: 100px;
+  margin-top: 100px;
+  margin-left: 290px;
+  margin-bottom: 500px;
+  font-family: 'Roboto Mono', monospace;
+  border: solid 1px lightgrey;
+  background-color: hsl(0, 0%, 98%);
+`;
+
 const Content = styled.div`
   margin-top: 40px;
-  border: solid;
+
   padding: 15px;
 `;
+
 const Desc = styled.div``;
+
 const Img = styled.img`
   height: 75px;
-  border: solid;
   padding: 5px;
   margin-right: 5px;
 `;
+
 const Price = styled.div`
   display: flex;
   justify-content: space-between;
@@ -73,13 +98,90 @@ const Price = styled.div`
   border-top: solid;
   padding-top: 5px;
 `;
+
 const DivDesc = styled.div`
   display: flex;
 `;
+
 const Update = styled.div`
   font-size: 23px;
   display: flex;
   gap: 5px;
   margin-top: 5px;
 `;
+
+const Confirmation = styled.div`
+padding-top: 20px;
+padding-bottom: 20px;
+font-size: 45px;
+font-weight: bold;
+`
+
+const ConfirmationText = styled.div`
+font-size: 20px;
+`;
+
+const Mascot = styled.div`
+padding-top: 20px;
+font-size: 45px;
+`;
+
+const ComeAgain = styled.div`
+font-size: 20px;
+padding: 20px;
+`;
+
+const Loading = styled.div`
+  font-family: "Roboto Mono", monospace;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  background: transparent;
+  border: 3px solid #3c3c3c;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 150px;
+  font-size: 20px;
+  color: ${COLORS.shadowColour};
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px ${COLORS.shadowColour};
+  box-shadow: 0 0 20px ${COLORS.shadowColour};
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top: 3px solid ${COLORS.borderColour};
+    border-right: 3px solid ${COLORS.borderColour};
+    border-radius: 50%;
+    animation: animateC 2s linear infinite;
+  }
+
+  @keyframes animateC {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes animate {
+    0% {
+      transform: rotate(45deg);
+    }
+    100% {
+      transform: rotate(405deg);
+    }
+  }
+`;
+
+
 export default Confirm;
