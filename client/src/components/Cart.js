@@ -82,7 +82,7 @@ const Cart = () => {
   return (
     <>
       <Wrapper>
-        <Div>Cart:</Div>
+        <Div>Cart</Div>
         {item === undefined ? (
           <>
             <Empty>No items in cart</Empty>
@@ -135,16 +135,27 @@ const Cart = () => {
 };
 
 const Checkout = styled.button`
-  margin: 50px;
-  padding: 15px;
-  font-size: 30px;
-  border-radius: 15px;
+  margin-top: 30px;
+  text-decoration: none;
+  transition: all .5s ease;
+  color: black;
+  margin-left: 560px;
+  border: 3px solid black;
+  font-family:'Montserrat', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  font-size: 25px;
+  background-color: transparent;
+  padding: 5px;
+  outline: none;
+  border-radius: 4px;
+
+&:hover {
+  cursor: pointer;
   color: white;
-  background-color: ${COLORS.button};
-  &:hover {
-    background-color: ${COLORS.bhovering};
-    cursor: pointer;
-  }
+  background-color: black;
+}
 `;
 
 const Update = styled.div`
@@ -176,6 +187,7 @@ const Price = styled.div`
 
 const DivDesc = styled.div`
   display: flex;
+  word-wrap: wrap;
 `;
 
 const Trash = styled(BsTrash)`
@@ -195,11 +207,13 @@ const Img = styled.img`
 `;
 
 const Content = styled.div`
+  margin-left: 160px;
   margin-top: 40px;
   padding: 15px;
 `;
 
 const Wrapper = styled.div`
+  justify-content: center;
   font-family: "Roboto Mono", monospace;
   margin-top: 30px;
   margin-left: 20px;
@@ -208,13 +222,14 @@ const Wrapper = styled.div`
 const Div = styled.div`
   font-size: 45px;
   font-weight: bold;
-  border-bottom: solid 5px;
   width: fit-content;
-  padding-right: 90px;
-  padding-bottom: 10px;
+  padding-left: 600px;
+
 `;
 
 const Empty = styled.div`
+  text-align: center;
+  margin-left: 370px;
   margin-top: 30px;
   font-size: 45px;
   font-style: italic;

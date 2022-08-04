@@ -9,6 +9,7 @@ import HomePage from "./HomeFeed";
 import Items from "./Items";
 import Checkout from "./Checkout";
 import Confirm from "./Confirmed";
+import Welcome from "./Welcome";
 
 const App = () => {
   return (
@@ -18,11 +19,12 @@ const App = () => {
         <Header />
         <Div>
           <Routes>
-            <Route exact path="/" element={<HomePage/>} />
+            <Route exact path="/" element={<Welcome />} />
+            <Route exact path="/product" element={<HomePage />} />
             <Route exact path="/cart" element={<Cart />} />
-            <Route exact path="/item/:item" element={<Items/>} />
-            <Route exact path="/checkout" element={<Checkout/>}/>
-            <Route exact path="/confirmed" element={<Confirm/>}/>
+            <Route exact path="/item/:item" element={<Items />} />
+            <Route exact path="/checkout" element={<Checkout />} />
+            <Route exact path="/confirmed" element={<Confirm />} />
           </Routes>
         </Div>
         <Footer />
@@ -37,7 +39,7 @@ const Div = styled.div`
   margin: auto;
   width: 70%;
   height: 100%;
-  min-height: 1250px;
+  min-height: 1300px;
 `;
 
 export default App;

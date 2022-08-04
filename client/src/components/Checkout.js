@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Checkout = () => {
   const [load, setLoad] = useState(false);
@@ -124,39 +125,21 @@ const Checkout = () => {
           />
         </Input>
 
-        <Button>
-          <button
-            type={"submit"}
-            disabled={
-              name === "" ||
-              lastName === "" ||
-              email === "" ||
-              addy === "" ||
-              pay === ""
-            }
-          >
-            {" "}
-            Place Order{" "}
-          </button>
-        </Button>
+        <Button type={"submit"} disabled={name === "" || lastName === "" || email === "" || addy === "" || pay === ""}> {" "} Place Order{" "}</Button>
       </form>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
-  -webkit-box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
-  -moz-box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
   text-align: center;
   padding-left: 100px;
   padding-right: 100px;
-  margin-top: 150px;
+  margin-top: 70px;
   margin-left: 480px;
   margin-bottom: 500px;
   font-family: "Roboto Mono", monospace;
-  border: solid 1px lightgrey;
-  background-color: hsl(0, 0%, 98%);
+
 `;
 
 const Title = styled.div`
@@ -178,9 +161,29 @@ const Cards = styled.span`
   font-weight: bold;
 `;
 
-const Button = styled.div`
-  padding-top: 35px;
-`;
+const Button = styled.button`
+  margin-top: 50px;
+  position: absolute;
+  text-decoration: none;
+  transition: all .5s ease;
+  color: black;
+  margin-left: -99px;
+  border: 3px solid black;
+  font-family:'Montserrat', sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  font-size: 25px;
+  background-color: transparent;
+  padding: 5px;
+  outline: none;
+  border-radius: 4px;
+
+&:hover {
+  cursor: pointer;
+  color: white;
+  background-color: black;
+}`
 
 const Row = styled.div`
   flex-direction: column;

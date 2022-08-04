@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { GiShoppingCart, GiHound } from "react-icons/gi";
+import { GiShoppingCart, GiHound, GiShoppingBag } from "react-icons/gi";
+import { BsCart4 } from "react-icons/bs"
 import { useState, useEffect } from "react";
 import { COLORS } from "./constants";
 import { NavLink } from "react-router-dom";
@@ -35,30 +36,19 @@ const Header = () => {
   return (
     <Bar>
       <StyledLink to={"/"}>
-        <Title>
-          <GiHound />
-          <Span>Gear Watch</Span>
-        </Title>
-      </StyledLink>
-      <StyledLink to={"/"}>
-        <Span>Products</Span>
-      </StyledLink>
-      <StyledLink to={"/cart"}>
-        <Cart>
-          <Padding>Checkout</Padding>
-          <GiShoppingCart />
-          {numItem > 0 && <span>{numItem}</span>}
-        </Cart>
+      <Title><GiHound /><Span>Gear Watch</Span></Title></StyledLink>
+      <StyledLink to={"/product"}><Span><GiShoppingBag/> Products</Span></StyledLink>
+      <StyledLink to={"/cart"}><Span>Checkout <BsCart4 /> {numItem > 0 && <strong>{numItem}</strong>}</Span>
       </StyledLink>
     </Bar>
   );
 };
 
 const Bar = styled.div`
+  justify-content: space-around;
   font-family: 'Roboto Mono', monospace;
   font-size: 35px;
   display: flex;
-  justify-content: space-between;
   padding: 25px 35px;
   background-color: #0B0C10;
   border-bottom: outset 2px #1F2833;
@@ -67,31 +57,27 @@ const Bar = styled.div`
 const Title = styled.div`
   padding-left: 10px;
   font-weight: bold;
-  display: flex;
 `;
 
-const Cart = styled.div`
-  display: flex;
-`;
 
 const StyledLink = styled(NavLink)`
   text-decoration: none;
-  color: #C5C6C7;
+  color: hsl(0, 0%, 100%);;
   &:hover {
-    color: #45A29E;
+    color: hsl(209, 100%, 80%);
     transition: 0.5s;
   };
   &.active {
-  color: #A0D1F0;
-};
-`;
+  color: hsl(195, 100%, 51%);
+}`;
 
-const Padding = styled.span`
-  padding-right: 10px;
+
+
+const Left= styled.div`
 `;
 
 const Span = styled.span`
-  margin-left: 10px;
+  font-weight: bold;
 `;
 
 export default Header;
