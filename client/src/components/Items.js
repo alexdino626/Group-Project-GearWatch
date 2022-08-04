@@ -10,7 +10,10 @@ const Items = () => {
   const [loadComp, setLoadComp] = useState(false);
   const [count, setCount] = useState(1);
 
+  // we getting the param
   const value = useParams();
+
+  // this is getting the info of a specific item
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch(`/item/${value.item}`);
@@ -19,35 +22,43 @@ const Items = () => {
       setLoad(true);
       return json;
     };
-    fetchData().catch(() => {
-      console.log("S");
+    fetchData().catch((err) => {
+      throw new Error(err);
     });
   }, []);
+
+  //this will get the info of all the compagnies
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch(`/companies`);
       const json = await data.json();
-
       setComp(json.data);
       setLoadComp(true);
       return json;
     };
-    fetchData().catch(() => {
-      console.log("S");
+    fetchData().catch((err) => {
+      throw new Error(err);
     });
   }, []);
+
   if (load === false) {
     return <Loading>Loading</Loading>;
   }
   if (loadComp === false) {
     return <Loading></Loading>;
   }
+
+  //adds the number of items u want
   const handleClickPlus = () => {
     setCount(count + 1);
   };
+
+  // decrease the number u want
   const handleClickMinus = () => {
     setCount(count - 1);
   };
+
+  // this will add the item to the cart with the quantity as well
   const handleAddCart = () => {
     fetch("/cart", {
       method: "POST",
@@ -82,10 +93,14 @@ const Items = () => {
           <Order>
             <Price>{item.price}</Price>
             {item.numInStock <= 3 && item.numInStock > 0 && (
-              <LowStock><strong>Low in stock!</strong></LowStock>
+              <LowStock>
+                <strong>Low in stock!</strong>
+              </LowStock>
             )}
             {item.numInStock < 1 ? (
-              <OutStock><strong>Out of stock!</strong></OutStock>
+              <OutStock>
+                <strong>Out of stock!</strong>
+              </OutStock>
             ) : (
               <Stock>
                 <Button disabled={count === 1} onClick={handleClickMinus}>

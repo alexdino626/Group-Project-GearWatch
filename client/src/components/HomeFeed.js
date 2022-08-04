@@ -21,20 +21,21 @@ const HomePage = () => {
 
       return json;
     };
-    fetchData().catch(() => {
-      console.log("S");
+    fetchData().catch((err) => {
+      throw new Error(err)
     });
   }, []);
   if (load === false) {
     return <Loading>loading</Loading>;
   }
 
+  //this is the load more feature which will go back up
   const handleClick = () => {
     if (slice < items.length) {
       setSlice(slice + 24);
     } else {
-      window.scrollTo(0, 308);
-      setSlice(308);
+      window.scrollTo(0, 0);
+      // setSlice(308);
     }
   };
 
@@ -53,8 +54,16 @@ const HomePage = () => {
                     <Price>{x.price}</Price>
                     <Stock>
                       {x.numInStock} In stock
-                      <LowStock>{x.numInStock <= 3 && x.numInStock > 0 && (<strong>Low on stock</strong>)}</LowStock>
-                      <OutStock>{x.numInStock >= 0 && x.numInStock < 1 && (<strong>Out of stock</strong>)}</OutStock>
+                      <LowStock>
+                        {x.numInStock <= 3 && x.numInStock > 0 && (
+                          <strong>Low on stock</strong>
+                        )}
+                      </LowStock>
+                      <OutStock>
+                        {x.numInStock >= 0 && x.numInStock < 1 && (
+                          <strong>Out of stock</strong>
+                        )}
+                      </OutStock>
                     </Stock>
                   </Content>
                 </LinkItem>

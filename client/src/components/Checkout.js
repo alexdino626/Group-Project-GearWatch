@@ -20,20 +20,21 @@ const Checkout = () => {
   const [pay, setPay] = useState("");
   const [cart, setCart] = useState(null);
 
+  //this will get the final cart details
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch("/cart");
       const json = await data.json();
-
       setCart(json.data);
       setLoad(true);
       return json;
     };
-    fetchData().catch(() => {
-      console.log("S");
+    fetchData().catch((err) => {
+      throw new Error(err);
     });
   }, []);
 
+  // this handle the POST which deletes the cart and adds it to the orderHistory
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch("/purchase", {
@@ -49,9 +50,16 @@ const Checkout = () => {
         "Content-Type": "application/json",
       },
     })
+      .catch((err) => {
+        throw new Error(err);
+      })
       .then((res) => res.json())
       .then((data) => {
-        window.location.href = "/confirmed";
+        if (data.status === 400) {
+          alert(data.message);
+        } else {
+          window.location.href = "/confirmed";
+        }
       });
   };
 
@@ -125,7 +133,19 @@ const Checkout = () => {
           />
         </Input>
 
-        <Button type={"submit"} disabled={name === "" || lastName === "" || email === "" || addy === "" || pay === ""}> {" "} Place Order{" "}</Button>
+        <Button
+          type={"submit"}
+          disabled={
+            name === "" ||
+            lastName === "" ||
+            email === "" ||
+            addy === "" ||
+            pay === ""
+          }
+        >
+          {" "}
+          Place Order{" "}
+        </Button>
       </form>
     </Wrapper>
   );
@@ -135,11 +155,7 @@ const Wrapper = styled.div`
   text-align: center;
   padding-left: 100px;
   padding-right: 100px;
-  margin-top: 70px;
-  margin-left: 480px;
-  margin-bottom: 500px;
   font-family: "Roboto Mono", monospace;
-
 `;
 
 const Title = styled.div`
@@ -165,11 +181,11 @@ const Button = styled.button`
   margin-top: 50px;
   position: absolute;
   text-decoration: none;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   color: black;
   margin-left: -99px;
   border: 3px solid black;
-  font-family:'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
   text-align: center;
   line-height: 1;
@@ -179,11 +195,12 @@ const Button = styled.button`
   outline: none;
   border-radius: 4px;
 
-&:hover {
-  cursor: pointer;
-  color: white;
-  background-color: black;
-}`
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: black;
+  }
+`;
 
 const Row = styled.div`
   flex-direction: column;

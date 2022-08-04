@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 const Footer = () => {
+  //simple footer that has social  media
   return (
     <Bar>
       <Web href="https://www.facebook.com/Kijiji.ca/">

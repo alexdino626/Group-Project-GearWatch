@@ -8,21 +8,21 @@ import { Link } from "react-router-dom";
 import { COLORS } from "./constants";
 
 const Cart = () => {
+  //this is for we can put the cart in a value
   const [item, setItem] = useState(0);
   const [load, setLoad] = useState(false);
 
+  //this is what gets the info of the cart
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch("/cart");
       const json = await data.json();
-
       setItem(json.data);
       setLoad(true);
-
       return json;
     };
-    fetchData().catch(() => {
-      console.log("S");
+    fetchData().catch((err) => {
+      throw new Error(err)
     });
   }, []);
   if (load === false) {
@@ -33,6 +33,7 @@ const Cart = () => {
     );
   }
 
+  // when clicking the trash it will delete the item from the cart
   const handleDelete = (id) => {
     fetch("/cart", {
       method: "DELETE",
@@ -41,11 +42,16 @@ const Cart = () => {
       },
       body: JSON.stringify({ _id: id }),
     })
+    .catch((err) => {
+      throw new Error(err)
+    })
       .then((res) => res.json())
       .then((response) => {
         window.location.href = "/cart";
       });
   };
+
+  //This handles the editing of the cart so this will increase the number of qty of that item
   const handleClickPlus = (max, id) => {
     fetch("/cart", {
       method: "PATCH",
@@ -57,11 +63,16 @@ const Cart = () => {
         _id: id,
       }),
     })
+    .catch((err) => {
+      throw new Error(err)
+      })
       .then((res) => res.json())
       .then((response) => {
         window.location.href = "/cart";
       });
   };
+
+  //This handles the editing of the cart so this will increase the number of qty of that item
   const handleClickMinus = (min, id) => {
     fetch("/cart", {
       method: "PATCH",
@@ -72,6 +83,9 @@ const Cart = () => {
         quantity: min - 1,
         _id: id,
       }),
+    })
+    .catch((err) => {
+      throw new Error(err)
     })
       .then((res) => res.json())
       .then((response) => {
@@ -137,11 +151,10 @@ const Cart = () => {
 const Checkout = styled.button`
   margin-top: 30px;
   text-decoration: none;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   color: black;
-  margin-left: 560px;
   border: 3px solid black;
-  font-family:'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
   text-align: center;
   line-height: 1;
@@ -151,11 +164,11 @@ const Checkout = styled.button`
   outline: none;
   border-radius: 4px;
 
-&:hover {
-  cursor: pointer;
-  color: white;
-  background-color: black;
-}
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: black;
+  }
 `;
 
 const Update = styled.div`
@@ -207,29 +220,29 @@ const Img = styled.img`
 `;
 
 const Content = styled.div`
-  margin-left: 160px;
   margin-top: 40px;
   padding: 15px;
+  width: 1000px;
 `;
 
 const Wrapper = styled.div`
-  justify-content: center;
+display:flex ;
+flex-direction: column;
+align-items: center;
   font-family: "Roboto Mono", monospace;
   margin-top: 30px;
-  margin-left: 20px;
+
 `;
 
 const Div = styled.div`
   font-size: 45px;
   font-weight: bold;
   width: fit-content;
-  padding-left: 600px;
-
+ 
 `;
 
 const Empty = styled.div`
   text-align: center;
-  margin-left: 370px;
   margin-top: 30px;
   font-size: 45px;
   font-style: italic;
@@ -237,7 +250,6 @@ const Empty = styled.div`
 `;
 
 const Zz = styled.div`
-  margin-left: 500px;
   margin-top: 150px;
   font-size: 200px;
   flex-direction: column;
