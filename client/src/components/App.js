@@ -12,6 +12,7 @@ import Confirm from "./Confirmed";
 import Welcome from "./Welcome";
 
 const App = () => {
+  // this our app where all our routes are done
   return (
     <>
       <BrowserRouter>
@@ -34,10 +35,7 @@ const App = () => {
 };
 const Div = styled.div`
   display: flex;
-  border-right: solid 1px lightgray;
-  border-left: solid 1px lightgray;
-  margin: auto;
-  width: 70%;
+  justify-content: center;
   height: 100%;
   min-height: 1300px;
 `;

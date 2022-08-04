@@ -7,20 +7,21 @@ const Confirm = () => {
   const [load, setLoad] = useState(false);
   const [lastOrder, setLastOrder] = useState(null);
 
+  //like we didnt have a sign in fonc to get the order info of the last order,
+  //i proceeded by getting the orderHistory and getting the last item that was added
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch("/order-history/");
       const json = await data.json();
-
       setLastOrder(json.data);
       setLoad(true);
-
       return json;
     };
-    fetchData().catch(() => {
-      console.log("S");
+    fetchData().catch((err) => {
+      throw new Error(err)
     });
   }, []);
+
   if (load === false) {
     return (
       <>
