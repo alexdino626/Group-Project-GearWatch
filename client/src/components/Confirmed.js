@@ -24,7 +24,7 @@ const Confirm = () => {
   if (load === false) {
     return (
       <>
-        <Loading>loading</Loading>
+        <Loading>Loading</Loading>
       </>
     );
   }
@@ -73,23 +73,15 @@ const Confirm = () => {
 };
 
 const Wrapper = styled.div`
-  box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
-  -webkit-box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
-  -moz-box-shadow: 3px 10px 10px -2px rgba(0, 0, 0, 0.7);
+  align-items: center;
   text-align: center;
-  padding-left: 100px;
-  padding-right: 100px;
-  margin-top: 100px;
-  margin-left: 290px;
-  margin-bottom: 500px;
   font-family: "Roboto Mono", monospace;
-  border: solid 1px lightgrey;
-  background-color: hsl(0, 0%, 98%);
+  margin-top: 50px;
+  margin-left: 140px;
 `;
 
 const Content = styled.div`
   margin-top: 40px;
-
   padding: 15px;
 `;
 
@@ -138,7 +130,8 @@ const Mascot = styled.div`
 
 const ComeAgain = styled.div`
   font-size: 20px;
-  padding: 20px;
+  padding-top: 50px;
+  padding-bottom: 80px;
 `;
 
 const Loading = styled.div`

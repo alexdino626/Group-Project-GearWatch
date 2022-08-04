@@ -53,16 +53,8 @@ const HomePage = () => {
                     <Price>{x.price}</Price>
                     <Stock>
                       {x.numInStock} In stock
-                      <LowStock>
-                        {x.numInStock <= 3 && x.numInStock > 0 && (
-                          <div>LOW IN STOCK!!!</div>
-                        )}
-                      </LowStock>
-                      <OutStock>
-                        {x.numInStock >= 0 && x.numInStock < 1 && (
-                          <div>OUT OF STOCK!!!</div>
-                        )}
-                      </OutStock>
+                      <LowStock>{x.numInStock <= 3 && x.numInStock > 0 && (<strong>Low on stock</strong>)}</LowStock>
+                      <OutStock>{x.numInStock >= 0 && x.numInStock < 1 && (<strong>Out of stock</strong>)}</OutStock>
                     </Stock>
                   </Content>
                 </LinkItem>
@@ -90,8 +82,8 @@ const OutStock = styled.div`
 
 const Wrapper = styled.div`
   font-family: "Roboto Mono", monospace;
-  margin-top: 30px;
-  margin-left: 20px;
+  padding-top: 20px;
+  padding: 10px;
 `;
 
 const Title = styled.div`
@@ -99,14 +91,13 @@ const Title = styled.div`
   font-style: italic;
   font-size: 25px;
   padding-bottom: 40px;
-  padding-right: 15px;
 `;
 
 const Items = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 30px;
   width: 1300px;
   flex-wrap: wrap;
 `;
@@ -130,6 +121,7 @@ const Content = styled.div`
 `;
 
 const Stock = styled.div`
+  text-align: center;
   margin-top: 5px;
   padding-bottom: 10px;
 `;
@@ -152,7 +144,7 @@ const Button = styled.button`
 
 const Img = styled.img`
   height: 150px;
-  width: 140px;
+  width: 150px;
 `;
 
 const Name = styled.div`
@@ -166,8 +158,9 @@ const Name = styled.div`
 `;
 
 const Price = styled.div`
+  text-align: center;
   font-weight: bold;
-  margin-top: 5px;
+  margin-top: 10px;
   padding-top: 5px;
 `;
 

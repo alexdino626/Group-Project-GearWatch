@@ -82,10 +82,10 @@ const Items = () => {
           <Order>
             <Price>{item.price}</Price>
             {item.numInStock <= 3 && item.numInStock > 0 && (
-              <div>LOW IN STOCK!!!</div>
+              <LowStock><strong>Low in stock!</strong></LowStock>
             )}
             {item.numInStock < 1 ? (
-              <>OUT OF STOCK</>
+              <OutStock><strong>Out of stock!</strong></OutStock>
             ) : (
               <Stock>
                 <Button disabled={count === 1} onClick={handleClickMinus}>
@@ -104,6 +104,16 @@ const Items = () => {
     </>
   );
 };
+
+const OutStock = styled.div`
+  font-size: 30px;
+  color: ${COLORS.out};
+`;
+
+const LowStock = styled.div`
+  font-size: 30px;
+  color: ${COLORS.low};
+`;
 
 const AddBut = styled.button`
   font-size: 25px;
